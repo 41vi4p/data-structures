@@ -1,70 +1,57 @@
 #include<stdio.h>
 
-int front=-1,rear=-1,size=5, maxsize=5,queue[5];
+#define MAX_SIZE 5
+int queue[MAX_SIZE];
+int front = -1, rear = -1;
 
-void enqueue(int value)
-{
-    if ((rear +1) % size == front)
-    {
-        printf("Queue if full");
-        return;
-    }
-    else if (front==-1)
-    {
-        front = 0;
-    }
-    rear = (rear+1)% size;
-    queue[rear]=value;
-    printf("\nElement inserted: %d",value);
+// Check if queue is full
+int isFull() {
+    return rear == MAX_SIZE - 1;
 }
 
-int dequeue()
-{
-    if (front == -1)
-    {
-        printf("\nQueue is Empty");
+// Check if queue is empty
+int isEmpty() {
+    return front == -1 || front > rear;
+}
+
+// Add element to queue
+void enqueue(int value) {
+    if (isFull()) {
+        printf("\nQueue is Full!");
+        return;
+    }
+    if (front == -1) 
+        front = 0;
+    queue[++rear] = value;
+    printf("\nInserted %d", value);
+}
+
+// Remove element from queue
+int dequeue() {
+    if (isEmpty()) {
+        printf("\nQueue is Empty!");
         return -1;
     }
-
-    int data = queue[front];
-
-   
-    if (front == rear) {
-        front = -1;
-        rear = -1;
+    int value = queue[front++];
+    if (front > rear) {
+        front = rear = -1;  // Reset queue when last element is removed
     }
-   
-    else {
-        front = (front + 1) % maxsize;
-    }
-
-    return data;
+    return value;
 }
 
-void display()
-{
-    if (front == -1)
-    {
-        printf("Queue if Empty");
+// Display queue elements
+void display() {
+    if (isEmpty()) {
+        printf("\nQueue is Empty!");
         return;
     }
-    printf("\n\nQueue Elements: ");
-    int index = front;
-    while (1)
-    {
-        printf("%d\t",queue[index]);
-        if (index == rear)
-        {
-            break;
-        }
-        index = (index + 1) % size;
-
+    printf("\nQueue elements: ");
+    for (int i = front; i <= rear; i++) {
+        printf("%d ", queue[i]);
     }
-    printf("\n");
 }
 
-int main()
-{   
+int main() {
     int choice, value;
     
     while(1) {
@@ -99,5 +86,5 @@ int main()
                 printf("\nInvalid choice!");
         }
     }
- 
+    return 0;
 }
