@@ -1,20 +1,17 @@
 #include<stdio.h>
 
-#define MAX_SIZE 5
+#define MAX_SIZE 3
 int queue[MAX_SIZE];
 int front = -1, rear = -1;
 
-// Check if queue is full
 int isFull() {
     return rear == MAX_SIZE - 1;
 }
 
-// Check if queue is empty
 int isEmpty() {
     return front == -1 || front > rear;
 }
 
-// Add element to queue
 void enqueue(int value) {
     if (isFull()) {
         printf("\nQueue is Full!");
@@ -26,7 +23,6 @@ void enqueue(int value) {
     printf("\nInserted %d", value);
 }
 
-// Remove element from queue
 int dequeue() {
     if (isEmpty()) {
         printf("\nQueue is Empty!");
@@ -34,12 +30,11 @@ int dequeue() {
     }
     int value = queue[front++];
     if (front > rear) {
-        front = rear = -1;  // Reset queue when last element is removed
+        front = rear = -1;  
     }
     return value;
 }
 
-// Display queue elements
 void display() {
     if (isEmpty()) {
         printf("\nQueue is Empty!");

@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-int front=-1,rear=-1,size=5, maxsize=5,queue[5];
+int front=-1,rear=-1,size=3, maxsize=3,queue[3];
 
 void enqueue(int value)
 {
