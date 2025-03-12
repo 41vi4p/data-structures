@@ -1,14 +1,13 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-//Node Structure
 typedef struct Node
 {
     int data;
     struct Node* next;
 }Node;
 
-//New node
+
 Node* createNode(int data)
 {
     Node* newNode = (Node*)malloc(sizeof(Node));
@@ -21,7 +20,6 @@ Node* createNode(int data)
     return newNode;
 }
 
-//Print the linked list
 void printList(Node* node)
 {
     while(node){
@@ -51,3 +49,5 @@ int main() {
 
     return 0;
 }
+
+// 
