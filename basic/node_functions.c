@@ -63,21 +63,100 @@ void insertAtMiddle(Node* prevNode, int data)
     prevNode->next = newNode;
 }
 
+void deleteAtStart(Node** head) {
+    if (*head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    Node* temp = *head;
+    *head = (*head)->next;
+    free(temp);
+}
+
+void deleteAtEnd(Node** head) {
+    if (*head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    if ((*head)->next == NULL) {
+        free(*head);
+        *head = NULL;
+        return;
+    }
+    Node* temp = *head;
+    while (temp->next->next != NULL) {
+        temp = temp->next;
+    }
+    free(temp->next);
+    temp->next = NULL;
+}
+
+void deleteAtPosition(Node** head, int position) {
+    if (*head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    if (position == 0) {
+        deleteAtStart(head);
+        return;
+    }
+    Node* temp = *head;
+    for (int i = 0; temp != NULL && i < position - 1; i++) {
+        temp = temp->next;
+    }
+    if (temp == NULL || temp->next == NULL) {
+        printf("Position out of range\n");
+        return;
+    }
+    Node* next = temp->next->next;
+    free(temp->next);
+    temp->next = next;
+}
+
+void reverseList(Node** head) {
+    Node* prev = NULL;
+    Node* current = *head;
+    Node* next = NULL;
+    while (current != NULL) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    *head = prev;
+}
+
+int searchList(Node* head, int key) {
+    int position = 0;
+    while (head != NULL) {
+        if (head->data == key) {
+            return position;
+        }
+        head = head->next;
+        position++;
+    }
+    return -1;
+}
 
 int main() {
     Node* head = NULL;
-    int choice, data,position;
+    int choice, data, position, key;
 
-    while(1) {
+    while (1) {
         printf("\n1. Insert at Start");
         printf("\n2. Insert at End");
         printf("\n3. Display List");
-        printf("\n4. Insert at Middle");    
-        printf("\n5. Exit");
+        printf("\n4. Insert at Middle");
+        printf("\n5. Delete at Start");
+        printf("\n6. Delete at End");
+        printf("\n7. Delete at Position");
+        printf("\n8. Reverse List");
+        printf("\n9. Search List");
+        printf("\n10. Exit");
         printf("\nEnter your choice: ");
         scanf("%d", &choice);
 
-        switch(choice) {
+        switch (choice) {
             case 1:
                 printf("Enter data to insert at start: ");
                 scanf("%d", &data);
@@ -119,6 +198,35 @@ int main() {
                 break;
 
             case 5:
+                deleteAtStart(&head);
+                break;
+
+            case 6:
+                deleteAtEnd(&head);
+                break;
+
+            case 7:
+                printf("Enter position to delete: ");
+                scanf("%d", &position);
+                deleteAtPosition(&head, position);
+                break;
+
+            case 8:
+                reverseList(&head);
+                break;
+
+            case 9:
+                printf("Enter data to search: ");
+                scanf("%d", &key);
+                position = searchList(head, key);
+                if (position != -1) {
+                    printf("Element found at position: %d\n", position);
+                } else {
+                    printf("Element not found\n");
+                }
+                break;
+
+            case 10:
                 printf("Exiting program\n");
                 return 0;
 
