@@ -48,15 +48,24 @@ void MFT(int memorySize, int blockSize, Process processes[], int numProcesses) {
 }
 
 int main() {
-    int memorySize = 100;
-    int blockSize = 20;
-    Process processes[] = {
-        {1, 15, false},
-        {2, 25, false},
-        {3, 10, false},
-        {4, 20, false}
-    };
-    int numProcesses = sizeof(processes) / sizeof(processes[0]);
+    int memorySize, blockSize, numProcesses;
+
+    cout << "Enter the total memory size: ";
+    cin >> memorySize;
+
+    cout << "Enter the block size: ";
+    cin >> blockSize;
+
+    cout << "Enter the number of processes: ";
+    cin >> numProcesses;
+
+    Process processes[numProcesses];
+    for (int i = 0; i < numProcesses; i++) {
+        cout << "Enter size for Process " << i + 1 << ": ";
+        cin >> processes[i].size;
+        processes[i].id = i + 1;
+        processes[i].allocated = false;
+    }
 
     MFT(memorySize, blockSize, processes, numProcesses);
 
