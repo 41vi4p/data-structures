@@ -78,7 +78,7 @@ void merge(int arr[], int left, int mid, int right) {
 }
 
 int mergeSort(int arr[], int left, int right) {
-    int pass = 0; // Track the number of passes
+    int pass = 0;
     if (left < right) {
         int mid = left + (right - left) / 2;
         pass += mergeSort(arr, left, mid);
@@ -112,16 +112,19 @@ int partition(int arr[], int low, int high) {
 }
 
 int quickSort(int arr[], int low, int high) {
-    int pass = 0; // Track the number of passes
+    int pass = 0; 
     if (low < high) {
         int pi = partition(arr, low, high);
         pass++;
-       
+        printf("\nPass %d:", pass);
+        printArray(arr, high+1); 
+        
+        
+        pass += quickSort(arr, low, pi - 1);
+        pass += quickSort(arr, pi + 1, high);
     }
     return pass;
 }
-
-
 
 int main() {
     int n = 0;
@@ -132,28 +135,37 @@ int main() {
     }
 
     int choice;
+    char* method = "";
+    int passes = 0;
+    
     printf("\nChoose sorting method:\n1. Bubble Sort\n2. Insertion Sort\n3. Merge Sort\n4. Quick Sort\n5. Exit\n");
     while (getchar() != '\n'); // Clear buffer
     scanf("%d", &choice);
     switch (choice) {
     case 1:
+        method = "Bubble Sort";
         bubbleSort(arr, n);
         break;
     case 2:
+        method = "Insertion Sort";
         insertionSort(arr, n);
         break;
     case 3:
-        mergeSort(arr, 0, n - 1);
+        method = "Merge Sort";
+        passes = mergeSort(arr, 0, n - 1);
+        printf("\nTotal passes: %d\n", passes);
         break;
     case 4:
-        quickSort(arr, 0, n - 1);
+        method = "Quick Sort";
+        passes = quickSort(arr, 0, n - 1);
+        printf("\nTotal passes: %d\n", passes);
         break;
     
     default:
         printf("Invalid choice\n");
         break;
     }
-    printf("\nSorted array: ");
+    printf("\nSorted array using %s: ", method);
     printArray(arr, n);
     return 0;
 }
